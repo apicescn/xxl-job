@@ -3,6 +3,7 @@ package com.xxl.job.spring.boot.autoconfigure.service.jobhandler;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.JobHander;
 import com.xxl.job.core.log.XxlJobLogger;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 //@Component
 @JobHander(value="springjob")
+@Service
 public class TestSpringHandler extends ISpringJobHandler {
     @Override
     public ReturnT<String> execute(String... params) throws Exception {

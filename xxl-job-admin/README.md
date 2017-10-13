@@ -32,10 +32,11 @@ xxl-job访问路径：http://127.0.0.1:8902/
 docker run -d -p 8761:8761 \
 --name xxl-job \
 -e xxl.job.db.driver-class=com.mysql.jdbc.Driver
--e xxl.job.db.url=jdbc:mysql://192.168.159.136:3306/odin?useUnicode=true&characterEncoding=UTF-8
--e xxl.job.db.jdbc-url=jdbc:mysql://192.168.159.136:3306/odin?useUnicode=true&characterEncoding=UTF-8&useSSL=true
--e xxl.job.db.user=root
--e xxl.job.db.password=123456
+-e xxl.job.db.jdbc-url=jdbc:mysql://192.168.10.24:3306/odin?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+-e xxl.job.db.user=songshu
+-e xxl.job.db.password=songshu
+-e xxl.job.db.driverClass=com.mysql.jdbc.Driver
+-e xxl.job.db.url=jdbc:mysql://192.168.10.24:3306/odin?useUnicode=true&characterEncoding=UTF-8
 registry.cn-hangzhou.aliyuncs.com/szss/xxl-job:v1.8.1
 ```
 

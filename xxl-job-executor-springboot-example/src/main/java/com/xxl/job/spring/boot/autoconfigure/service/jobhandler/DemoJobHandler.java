@@ -4,6 +4,7 @@ import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.JobHander;
 import com.xxl.job.core.log.XxlJobLogger;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @author xuxueli 2015-12-19 19:43:36
  */
 @JobHander(value="demoJobHandler")
+@Service
 public class DemoJobHandler extends IJobHandler {
 
 	@Override

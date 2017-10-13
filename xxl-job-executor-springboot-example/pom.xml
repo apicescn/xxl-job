@@ -45,6 +45,11 @@
             <artifactId>xxl-job-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>1.5.4.RELEASE</version>
+        </dependency>
 
     </dependencies>
 </project>
