@@ -4,7 +4,7 @@ import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.glue.GlueFactory;
 import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.JobHander;
-import com.xxl.job.spring.handler.ISpringJobHandler;
+import com.xxl.job.spring.boot.autoconfigure.service.jobhandler.ISpringJobHandler;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
