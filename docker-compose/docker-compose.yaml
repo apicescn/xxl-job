@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  xxl-job:     
+    image: registry.cn-hangzhou.aliyuncs.com/szss/xxl-job:v1.8.1
+    restart: always
+    ports:
+      - "8982:8080"
+    environment:
+      - xxl.job.db.driver-class=com.mysql.jdbc.Driver
+      - xxl.job.db.jdbc-url=jdbc:mysql://192.168.10.24:3306/odin?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+      - xxl.job.db.user=songshu
+      - xxl.job.db.password=songshu
+      - xxl.job.db.driverClass=com.mysql.jdbc.Driver
+      - xxl.job.db.url=jdbc:mysql://192.168.10.24:3306/odin?useUnicode=true&characterEncoding=UTF-8
