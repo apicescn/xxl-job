@@ -1,4 +1,4 @@
-package com.xxl.job.spring.boot.autoconfigure.service.jobhandler;
+package com.xxl.job.executor.service.jobhandler;
 
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.JobHander;
