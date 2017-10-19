@@ -13,3 +13,4 @@ services:
       - xxl.job.db.password=songshu
       - xxl.job.db.driverClass=com.mysql.jdbc.Driver
       - xxl.job.db.url=jdbc:mysql://192.168.10.24:3306/odin?useUnicode=true&characterEncoding=UTF-8
+      - xxl.job.login.password=songshu#2019

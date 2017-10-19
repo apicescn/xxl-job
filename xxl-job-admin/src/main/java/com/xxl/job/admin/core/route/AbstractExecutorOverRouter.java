@@ -1,6 +1,6 @@
 package com.xxl.job.admin.core.route;
 
-import com.xxl.job.admin.core.model.XxlJobLog;
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.jetty.NetComClientProxy;
 import com.xxl.job.core.biz.impl.ExecutorBizImpl;
 import com.xxl.job.core.biz.model.ReturnT;
@@ -29,7 +29,7 @@ public abstract class AbstractExecutorOverRouter extends ExecutorRouter {
                 beatResult = executorBiz.beat();
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
-                beatResult = ReturnT.error("" + e);
+                beatResult = ReturnTEx.error("" + e);
             }
             idleBeatResultSB.append( (idleBeatResultSB.length()>0)?"<br><br>":"")
 
@@ -49,6 +49,6 @@ public abstract class AbstractExecutorOverRouter extends ExecutorRouter {
                 return runResult;
             }
         }
-        return ReturnT.error(idleBeatResultSB.toString());
+        return ReturnTEx.error(idleBeatResultSB.toString());
     }
 }

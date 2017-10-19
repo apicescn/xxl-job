@@ -34,13 +34,20 @@ public class XxlJobConfig {
     @Value("${xxl.server.executor.log-path}")
     private String logpath;
 
-//    @Value("${xxl.job.accessToken}")
-//    private String accessToken;
+    @Value("${xxl.server.executor.accessToken}")
+    private String accessToken;
 
     @Bean(initMethod = "start", destroyMethod = "destroy")
     public XxlJobExecutor xxlJobExecutor() {
-        logger.error("------------ xxlJobExecutor -----------");
-        return new XxlJobExecutor(ip,port,appname,addresses,logpath);
+        logger.info(">>>>>>>>>>> xxl-job config init.");
+        XxlJobExecutor xxlJobExecutor = new XxlJobExecutor();
+        xxlJobExecutor.setIp(ip);
+        xxlJobExecutor.setPort(port);
+        xxlJobExecutor.setAppName(appname);
+        xxlJobExecutor.setAdminAddresses(addresses);
+        xxlJobExecutor.setLogPath(logpath);
+        xxlJobExecutor.setAccessToken(accessToken);
+        return xxlJobExecutor;
     }
 
 }

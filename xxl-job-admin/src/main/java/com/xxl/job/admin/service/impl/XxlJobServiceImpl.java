@@ -1,6 +1,7 @@
 package com.xxl.job.admin.service.impl;
 
 import com.xxl.job.admin.core.enums.ExecutorFailStrategyEnum;
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.route.ExecutorRouteStrategyEnum;
@@ -71,12 +72,12 @@ public class XxlJobServiceImpl implements XxlJobService {
     @Override
     public ReturnT<String> add(XxlJobInfo jobInfo) {
 
-        ReturnT<String> checkRet = _checkJobInfo(jobInfo, false);
+        ReturnTEx<String> checkRet = _checkJobInfo(jobInfo, false);
         if (checkRet.isSuccess()) {
             // add in db
             xxlJobInfoDao.save(jobInfo);
             if (jobInfo.getId() < 1) {
-                return ReturnT.error("新增任务失败");
+                return ReturnTEx.error("新增任务失败");
             }
 
             // add in quartz
@@ -94,7 +95,7 @@ public class XxlJobServiceImpl implements XxlJobService {
                 } catch (SchedulerException e1) {
                     logger.error("", e1);
                 }
-                return ReturnT.error("新增任务失败:" + e.getMessage());
+                return ReturnTEx.error("新增任务失败:" + e.getMessage());
             }
         } else {
             return checkRet;
@@ -104,12 +105,12 @@ public class XxlJobServiceImpl implements XxlJobService {
     @Override
     public ReturnT<String> reschedule(XxlJobInfo jobInfo) {
 
-        ReturnT<String> checkResult = _checkJobInfo(jobInfo, true);
+        ReturnTEx<String> checkResult = _checkJobInfo(jobInfo, true);
         if (checkResult.isSuccess()) {
             // stage job info
             XxlJobInfo exists_jobInfo = xxlJobInfoDao.loadById(jobInfo.getId());
             if (exists_jobInfo == null) {
-                return ReturnT.error("参数异常");
+                return ReturnTEx.error("参数异常");
             }
 //            String old_cron = exists_jobInfo.getJobCron();
             exists_jobInfo.merge(jobInfo);
@@ -271,39 +272,39 @@ public class XxlJobServiceImpl implements XxlJobService {
         result.put("triggerDayCountFailList", triggerDayCountFailList);
         result.put("triggerCountSucTotal", triggerCountSucTotal);
         result.put("triggerCountFailTotal", triggerCountFailTotal);
-        return ReturnT.success(result);
+        return ReturnTEx.success(result);
     }
 
 
-    private ReturnT<String> _checkJobInfo(XxlJobInfo jobInfo, boolean isUpdate) {
+    private ReturnTEx<String> _checkJobInfo(XxlJobInfo jobInfo, boolean isUpdate) {
 // valid
         XxlJobGroup group = xxlJobGroupDao.load(jobInfo.getJobGroup());
         if (!isUpdate && group == null) {
-            return ReturnT.error("请选择“执行器”");
+            return ReturnTEx.error("请选择“执行器”");
         }
         if (!CronExpression.isValidExpression(jobInfo.getJobCron())) {
-            return ReturnT.error("请输入格式正确的“Cron”");
+            return ReturnTEx.error("请输入格式正确的“Cron”");
         }
         if (StringUtils.isBlank(jobInfo.getJobDesc())) {
-            return ReturnT.error("请输入“任务描述”");
+            return ReturnTEx.error("请输入“任务描述”");
         }
         if (StringUtils.isBlank(jobInfo.getAuthor())) {
-            return ReturnT.error("请输入“负责人”");
+            return ReturnTEx.error("请输入“负责人”");
         }
         if (ExecutorRouteStrategyEnum.match(jobInfo.getExecutorRouteStrategy(), null) == null) {
-            return ReturnT.error("路由策略非法");
+            return ReturnTEx.error("路由策略非法");
         }
         if (ExecutorBlockStrategyEnum.match(jobInfo.getExecutorBlockStrategy(), null) == null) {
-            return ReturnT.error("阻塞处理策略非法");
+            return ReturnTEx.error("阻塞处理策略非法");
         }
         if (ExecutorFailStrategyEnum.match(jobInfo.getExecutorFailStrategy(), null) == null) {
-            return ReturnT.error("失败处理策略非法");
+            return ReturnTEx.error("失败处理策略非法");
         }
         if (!isUpdate && GlueTypeEnum.match(jobInfo.getGlueType()) == null) {
-            return ReturnT.error("运行模式非法非法");
+            return ReturnTEx.error("运行模式非法非法");
         }
         if (!isUpdate && GlueTypeEnum.BEAN == GlueTypeEnum.match(jobInfo.getGlueType()) && StringUtils.isBlank(jobInfo.getExecutorHandler())) {
-            return ReturnT.error("请输入“JobHandler”");
+            return ReturnTEx.error("请输入“JobHandler”");
         }
 
         // fix "\r" in shell
@@ -317,15 +318,15 @@ public class XxlJobServiceImpl implements XxlJobService {
             for (String childJobKeyItem : childJobKeys) {
                 String[] childJobKeyArr = childJobKeyItem.split("_");
                 if (childJobKeyArr.length != 2) {
-                    return ReturnT.error(MessageFormat.format("子任务Key({0})格式错误", childJobKeyItem));
+                    return ReturnTEx.error(MessageFormat.format("子任务Key({0})格式错误", childJobKeyItem));
                 }
                 XxlJobInfo childJobInfo = xxlJobInfoDao.loadById(Integer.valueOf(childJobKeyArr[1]));
                 if (childJobInfo == null) {
-                    return ReturnT.error(MessageFormat.format("子任务Key({0})无效", childJobKeyItem));
+                    return ReturnTEx.error(MessageFormat.format("子任务Key({0})无效", childJobKeyItem));
                 }
             }
         }
-        return ReturnT.success("验证通过");
+        return ReturnTEx.success("验证通过");
     }
 
 }

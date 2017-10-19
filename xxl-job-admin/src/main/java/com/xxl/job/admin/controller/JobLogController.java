@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
@@ -61,7 +62,7 @@ public class JobLogController {
     @ResponseBody
     public ReturnT<List<XxlJobInfo>> listJobByGroup(String jobGroup) {
         List<XxlJobInfo> list = xxlJobInfoDao.getJobsByGroup(jobGroup);
-        return ReturnT.success(list);
+        return ReturnTEx.success(list);
     }
 
     @RequestMapping("/pageList")
@@ -132,7 +133,7 @@ public class JobLogController {
             return logResult;
         } catch (Exception e) {
             e.printStackTrace();
-            return ReturnT.error(e.getMessage());
+            return ReturnTEx.error(e.getMessage());
         }
     }
 
@@ -143,10 +144,10 @@ public class JobLogController {
         XxlJobLog log = xxlJobLogDao.load(id);
         XxlJobInfo jobInfo = xxlJobInfoDao.loadById(log.getJobId());
         if (jobInfo == null) {
-            return ReturnT.error("参数异常");
+            return ReturnTEx.error("参数异常");
         }
         if (ReturnT.SUCCESS_CODE != log.getTriggerCode()) {
-            return ReturnT.error("调度失败，无法终止日志");
+            return ReturnTEx.error("调度失败，无法终止日志");
         }
 
         // request of kill
@@ -155,7 +156,7 @@ public class JobLogController {
             executorBiz = (ExecutorBiz) new NetComClientProxy(ExecutorBiz.class, log.getExecutorAddress()).getObject();
         } catch (Exception e) {
             e.printStackTrace();
-            return ReturnT.error(e.getMessage());
+            return ReturnTEx.error(e.getMessage());
         }
         ReturnT<String> runResult = executorBiz.kill(jobInfo.getId());
 
@@ -164,9 +165,9 @@ public class JobLogController {
             log.setHandleMsg("人为操作主动终止:" + (runResult.getMsg() != null ? runResult.getMsg() : ""));
             log.setHandleTime(new Date());
             xxlJobLogDao.updateHandleInfo(log);
-            return ReturnT.error(runResult.getMsg());
+            return ReturnTEx.error(runResult.getMsg());
         } else {
-            return ReturnT.error(runResult.getMsg());
+            return ReturnTEx.error(runResult.getMsg());
         }
     }
 
@@ -195,7 +196,7 @@ public class JobLogController {
         } else if (type == 9) {
             clearBeforeNum = 0;            // 清理所用日志数据
         } else {
-            return ReturnT.error("清理类型参数异常");
+            return ReturnTEx.error("清理类型参数异常");
         }
 
         xxlJobLogDao.clearLog(jobGroup, jobId, clearBeforeTime, clearBeforeNum);

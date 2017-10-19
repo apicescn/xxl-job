@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLogGlue;
 import com.xxl.job.admin.dao.IXxlJobInfoDao;
@@ -53,14 +54,14 @@ public class JobCodeController {
 	public ReturnT<String> save(Model model, int id, String glueSource, String glueRemark) {
 		// valid
 		if (glueRemark==null) {
-			return ReturnT.error("请输入备注");
+			return ReturnTEx.error("请输入备注");
 		}
 		if (glueRemark.length()<4 || glueRemark.length()>100) {
-			return ReturnT.error("备注长度应该在4至100之间");
+			return ReturnTEx.error("备注长度应该在4至100之间");
 		}
 		XxlJobInfo exists_jobInfo = xxlJobInfoDao.loadById(id);
 		if (exists_jobInfo == null) {
-			return ReturnT.error("参数异常");
+			return ReturnTEx.error("参数异常");
 		}
 		
 		// update new code

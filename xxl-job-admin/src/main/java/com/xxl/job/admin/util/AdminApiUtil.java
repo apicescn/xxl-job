@@ -1,6 +1,8 @@
-package com.xxl.job.core.util;
+package com.xxl.job.admin.util;
 
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.util.JacksonUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -46,7 +48,7 @@ public class AdminApiUtil {
     public static ReturnT<String> callApiFailover(String subUrl, Object requestObj) throws Exception {
 
         if (!allowCallApi()) {
-            return ReturnT.error("allowCallApi fail.");
+            return ReturnTEx.error("allowCallApi fail.");
         }
 
         for (String adminAddress : adminAddressList) {
@@ -95,7 +97,7 @@ public class AdminApiUtil {
             if (null != entity) {
                 String responseMsg = EntityUtils.toString(entity, "UTF-8");
                 if (response.getStatusLine().getStatusCode() != 200) {
-                    return ReturnT.of(response.getStatusLine().getStatusCode(),
+                    return ReturnTEx.of(response.getStatusLine().getStatusCode(),
                             "StatusCode（+" + response.getStatusLine().getStatusCode() + "） Error，response：" + responseMsg);
                 }
 
@@ -108,7 +110,7 @@ public class AdminApiUtil {
             return ReturnT.FAIL;
         } catch (Exception e) {
             logger.error("", e);
-            return ReturnT.error(e.getMessage());
+            return ReturnTEx.error(e.getMessage());
         } finally {
             httpPost.releaseConnection();
             try {

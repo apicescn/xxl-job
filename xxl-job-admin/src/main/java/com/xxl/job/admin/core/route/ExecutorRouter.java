@@ -1,9 +1,8 @@
 package com.xxl.job.admin.core.route;
 
-import com.xxl.job.admin.core.model.XxlJobLog;
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.jetty.NetComClientProxy;
 import com.xxl.job.core.biz.ExecutorBiz;
-import com.xxl.job.core.biz.impl.ExecutorBizImpl;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.biz.model.TriggerParam;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public abstract class ExecutorRouter {
             runResult = executorBiz.run(triggerParam);
         } catch (Exception e) {
             logger.error("", e);
-            runResult = ReturnT.error(e.getMessage());
+            runResult = ReturnTEx.error(e.getMessage());
         }
 
         String runResultSB = "触发调度：" + "<br>address：" + address +

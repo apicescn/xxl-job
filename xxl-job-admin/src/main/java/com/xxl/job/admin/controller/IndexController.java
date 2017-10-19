@@ -2,8 +2,9 @@ package com.xxl.job.admin.controller;
 
 import com.xxl.job.admin.config.AppConfig;
 import com.xxl.job.admin.controller.annotation.PermissionLimit;
-import com.xxl.job.admin.service.XxlJobService;
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.service.LoginService;
+import com.xxl.job.admin.service.XxlJobService;
 import com.xxl.job.core.biz.model.ReturnT;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class IndexController {
 				}
 				loginService.login(response, ifRem);
 			} else {
-				return ReturnT.error("账号或密码错误");
+				return ReturnTEx.error("账号或密码错误");
 			}
 		}
 		return ReturnT.SUCCESS;

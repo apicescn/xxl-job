@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.xxl.job.admin.core.model.ReturnTEx;
 import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.thread.JobRegistryMonitorHelper;
 import com.xxl.job.admin.dao.IXxlJobGroupDao;
@@ -71,12 +72,12 @@ public class JobGroupController {
         // valid
         int count = xxlJobInfoDao.pageListCount(0, 10, id, null);
         if (count > 0) {
-            return ReturnT.error("该分组使用中, 不可删除");
+            return ReturnTEx.error("该分组使用中, 不可删除");
         }
 
         List<XxlJobGroup> allList = xxlJobGroupDao.findAll();
         if (allList.size() == 1) {
-            return ReturnT.error("删除失败, 系统需要至少预留一个默认分组");
+            return ReturnTEx.error("删除失败, 系统需要至少预留一个默认分组");
         }
 
         int ret = xxlJobGroupDao.remove(id);
@@ -86,22 +87,22 @@ public class JobGroupController {
     private ReturnT<String> _checkRequest(XxlJobGroup xxlJobGroup) {
         // valid
         if (xxlJobGroup.getAppName() == null || StringUtils.isBlank(xxlJobGroup.getAppName())) {
-            return ReturnT.error("请输入AppName");
+            return ReturnTEx.error("请输入AppName");
         }
         if (xxlJobGroup.getAppName().length() > 64) {
-            return ReturnT.error("AppName长度限制为4~64");
+            return ReturnTEx.error("AppName长度限制为4~64");
         }
         if (xxlJobGroup.getTitle() == null || StringUtils.isBlank(xxlJobGroup.getTitle())) {
-            return ReturnT.error("请输入名称");
+            return ReturnTEx.error("请输入名称");
         }
         if (xxlJobGroup.getAddressType() != 0) {
             if (StringUtils.isBlank(xxlJobGroup.getAddressList())) {
-                return ReturnT.error("手动录入注册方式，机器地址不可为空");
+                return ReturnTEx.error("手动录入注册方式，机器地址不可为空");
             }
             String[] address = xxlJobGroup.getAddressList().split(",");
             for (String item : address) {
                 if (StringUtils.isBlank(item)) {
-                    return ReturnT.error("机器地址非法");
+                    return ReturnTEx.error("机器地址非法");
                 }
             }
         }

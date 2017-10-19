@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 //@Component
 @JobHander(value="springjob")
-@Service
+//@Service
 public class TestSpringHandler extends ISpringJobHandler {
     @Override
     public ReturnT<String> execute(String... params) throws Exception {

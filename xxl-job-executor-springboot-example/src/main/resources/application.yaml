@@ -13,8 +13,9 @@ logging:
 xxl:
   server:
     executor:
-      ip: 192.168.159.136
-      addresses: http://192.168.159.136:8982/
+      ip: 127.0.0.1
+      addresses: http://localhost:8080/
       log-path: /data/logs/springtest
       port: 9999
       app-name: springtest
+      accessToken: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib3NzLXNlcnZpY2UiLCJvcGVuYXBpLXNlcnZpY2UiXSwidXNlcl9uYW1lIjoiMTU1NTUzNzEwODAiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiZXhwIjoxNTM5ODMwNjk0LCJhdXRob3JpdGllcyI6WyJVU0VSIl0sImp0aSI6ImJmNzc5MDZkLWEyOTktNGY0MS04MTc5LTk5NjZiMTc5YzY2OCIsImNsaWVudF9pZCI6InRlc3QifQ.Ahpo3362vAH7qTYsfxlK5BtxXWR_04Rjcpl-p6YCE9w
