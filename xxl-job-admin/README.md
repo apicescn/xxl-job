@@ -20,7 +20,7 @@ docker-compose up -d
 
 # 3 启动镜像
 ```bash
-docker run -d -p 8902:8080 --name xxl-job registry.cn-hangzhou.aliyuncs.com/szss/xxl-job:v1.8.1
+docker run -d -p 8902:8080 --name xxl-job registry.cn-hangzhou.aliyuncs.com/szss-sls/xxl-job:v1.8.1
 ```
 
 xxl-job访问路径：http://127.0.0.1:8902/
